@@ -36,29 +36,34 @@ gulp.task('browserSync', function() {
 //compressing images & handle SVG files
 gulp.task('images', function(tmp) {
 //  gulp.src(['app/images/*.jpg', 'app/images/*.png'])
-    gulp.src(['public_html/images/src/**/*.jpg', 'public_html/images/src/**/*.png'])
+//  gulp.src(['public_html/images/src/**/*.jpg', 'public_html/images/src/**/*.png'])
+    gulp.src(['app/images/src/**/*.jpg', 'app/images/src/**/*.png'])
         //prevent pipe breaking caused by errors from gulp plugins
         .pipe(plumber())
         .pipe(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true }))
 //      .pipe(gulp.dest('app/images'));
-        .pipe(gulp.dest('public_html/images'));
+//      .pipe(gulp.dest('public_html/images'));
+        .pipe(gulp.dest('app/images'));
 });
 
 //compressing images & handle SVG files
 gulp.task('images-deploy', function() {
 //  gulp.src(['app/images/**/*', '!app/images/README'])
-    gulp.src(['public_html/images/**/*', '!public_html/images/README'])
+//  gulp.src(['public_html/images/**/*', '!public_html/images/README'])
+    gulp.src(['app/images/**/*', '!app/images/README'])
         //prevent pipe breaking caused by errors from gulp plugins
         .pipe(plumber())
 //      .pipe(gulp.dest('dist/images'));
-        .pipe(gulp.dest('public_html/images'));
+//      .pipe(gulp.dest('public_html/images'));
+        .pipe(gulp.dest('dist/images'));
 });
 
 //compiling our Javascripts
 gulp.task('scripts', function() {
     //this is where our dev JS scripts are
 //  return gulp.src(['app/scripts/src/_includes/**/*.js', 'app/scripts/src/**/*.js'])
-    return gulp.src(['public_html/scripts/src/_includes/**/*.js', 'public_html/scripts/src/**/*.js'])
+//  return gulp.src(['public_html/scripts/src/_includes/**/*.js', 'public_html/scripts/src/**/*.js'])
+    return gulp.src(['app/scripts/src/_includes/**/*.js', 'app/scripts/src/**/*.js'])
                 //prevent pipe breaking caused by errors from gulp plugins
                 .pipe(plumber())
                 //this is the filename of the compressed version of our JS
@@ -68,7 +73,8 @@ gulp.task('scripts', function() {
                 .on('error', gutil.log)
                 //where we will store our finalized, compressed script
 //              .pipe(gulp.dest('app/scripts'))
-                .pipe(gulp.dest('public_html/scripts'))
+//              .pipe(gulp.dest('public_html/scripts'))
+                .pipe(gulp.dest('app/scripts'))
                 //notify browserSync to refresh
                 .pipe(browserSync.reload({stream: true}));
 });
@@ -77,7 +83,8 @@ gulp.task('scripts', function() {
 gulp.task('scripts-deploy', function() {
     //this is where our dev JS scripts are
 //  return gulp.src(['app/scripts/src/_includes/**/*.js', 'app/scripts/src/**/*.js'])
-    return gulp.src(['public_html/scripts/src/_includes/**/*.js', 'public_html/scripts/src/**/*.js'])
+//  return gulp.src(['public_html/scripts/src/_includes/**/*.js', 'public_html/scripts/src/**/*.js'])
+    return gulp.src(['app/scripts/src/_includes/**/*.js', 'app/scripts/src/**/*.js'])
                 //prevent pipe breaking caused by errors from gulp plugins
                 .pipe(plumber())
                 //this is the filename of the compressed version of our JS
@@ -88,14 +95,16 @@ gulp.task('scripts-deploy', function() {
                 .pipe(uglify('scripts.min.js'))
                 //where we will store our finalized, compressed script
 //              .pipe(gulp.dest('dist/scripts'));
-                .pipe(gulp.dest('public_html/scripts'));
+//              .pipe(gulp.dest('public_html/scripts'));
+                .pipe(gulp.dest('dist/scripts'));
 });
 
 //compiling our SCSS files
 gulp.task('styles', function() {
     //the initializer / master SCSS file, which will just be a file that imports everything
 //  return gulp.src('app/styles/scss/init.scss')
-    return gulp.src('public_html/styles/scss/init.scss')
+//  return gulp.src('public_html/styles/scss/init.scss')
+    return gulp.src('app/styles/scss/init.scss')
                 //prevent pipe breaking caused by errors from gulp plugins
                 .pipe(plumber({
                   errorHandler: function (err) {
@@ -110,7 +119,8 @@ gulp.task('styles', function() {
                       errLogToConsole: true,
                       includePaths: [
 //                        'app/styles/scss/'
-                          'public_html/styles/scss/'
+//                        'public_html/styles/scss/'
+                          'app/styles/scss/'
                       ]
                 }))
                 .pipe(autoprefixer({
@@ -125,7 +135,8 @@ gulp.task('styles', function() {
                 .pipe(sourceMaps.write())
                 //where to save our final, compressed css file
 //              .pipe(gulp.dest('app/styles'))
-                .pipe(gulp.dest('public_html/styles/css'))
+//              .pipe(gulp.dest('public_html/styles/css'))
+                .pipe(gulp.dest('app/styles/css'))
                 //notify browserSync to refresh
                 .pipe(browserSync.reload({stream: true}));
 });
@@ -134,13 +145,15 @@ gulp.task('styles', function() {
 gulp.task('styles-deploy', function() {
     //the initializer / master SCSS file, which will just be a file that imports everything
 //  return gulp.src('app/styles/scss/init.scss')
-    return gulp.src('public_html/styles/scss/init.scss')
+//  return gulp.src('public_html/styles/scss/init.scss')
+    return gulp.src('app/styles/scss/init.scss')
                 .pipe(plumber())
                 //include SCSS includes folder
                 .pipe(sass({
                       includePaths: [
 //                        'app/styles/scss',
-                          'public_html/styles/scss',
+//                        'public_html/styles/scss',
+                          'app/styles/scss',
                       ]
                 }))
                 .pipe(autoprefixer({
@@ -152,14 +165,16 @@ gulp.task('styles-deploy', function() {
                 .pipe(minifyCSS('styles.min.css'))
                 //where to save our final, compressed css file
 //              .pipe(gulp.dest('dist/styles'));
-                .pipe(gulp.dest('public_html/styles/css'));
+//              .pipe(gulp.dest('public_html/styles/css'));
+                .pipe(gulp.dest('dist/styles/css'));
 });
 
 //basically just keeping an eye on all HTML files
 gulp.task('html', function() {
     //watch any and all HTML files and refresh when something changes
 //  return gulp.src('app/*.html')
-    return gulp.src('public_html/**/*.html')
+//  return gulp.src('public_html/**/*.html')
+    return gulp.src('app/**/*.html')
         .pipe(plumber())
         .pipe(browserSync.reload({stream: true}))
         //catch errors
@@ -219,13 +234,21 @@ gulp.task('scaffold', function() {
 //  compress all scripts and SCSS files
 gulp.task('default', ['browserSync', 'scripts', 'styles'], function() {
     //a list of watchers, so it will watch all of the following files waiting for changes
+
 //  gulp.watch('app/scripts/src/**', ['scripts']);
-    gulp.watch('public_html/scripts/src/**', ['scripts']);
-    gulp.watch('public_html/styles/scss/**', ['styles']);
+//  gulp.watch('public_html/scripts/src/**', ['scripts']);
+    gulp.watch('app/scripts/src/**', ['scripts']);
+
+//  gulp.watch('public_html/styles/scss/**', ['styles']);
+    gulp.watch('app/styles/scss/**', ['styles']);
+
 //  gulp.watch('app/images/**', ['images']);
-    gulp.watch('public_html/images/**', ['images']);
+//  gulp.watch('public_html/images/**', ['images']);
+    gulp.watch('app/images/**', ['images']);
+
 //  gulp.watch('app/*.php', ['html']);
-    gulp.watch('public_html/**/*.html').on("change", browserSync.reload);
+//  gulp.watch('public_html/**/*.html').on("change", browserSync.reload);
+    gulp.watch('app/**/*.html').on("change", browserSync.reload);
 });
 
 //this is our deployment task, it will set everything for deployment-ready files
