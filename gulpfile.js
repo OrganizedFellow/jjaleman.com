@@ -63,7 +63,7 @@ gulp.task('scripts', function() {
     //this is where our dev JS scripts are
 //  return gulp.src(['app/scripts/src/_includes/**/*.js', 'app/scripts/src/**/*.js'])
 //  return gulp.src(['public_html/scripts/src/_includes/**/*.js', 'public_html/scripts/src/**/*.js'])
-    return gulp.src(['app/scripts/src/_includes/**/*.js', 'app/scripts/src/**/*.js'])
+    return gulp.src(['app/scripts/src/**/*.js'])
                 //prevent pipe breaking caused by errors from gulp plugins
                 .pipe(plumber())
                 //this is the filename of the compressed version of our JS
