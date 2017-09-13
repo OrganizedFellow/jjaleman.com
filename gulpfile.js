@@ -1,5 +1,5 @@
 //initialize all of our variables
-var app, base, concat, directory, gulp, gutil, hostname, path, refresh, sass, uglify, imagemin, minifyCSS, del, browserSync, autoprefixer, gulpSequence, shell, sourceMaps, plumber;
+var app, base, concat, directory, gulp, gutil, hostname, path, refresh, sass, uglify, imagemin, minifyCSS, del, browserSync, autoprefixer, gulpSequence, shell, sourceMaps, plumber, htmlreplace;
 
 var autoPrefixBrowserList = ['last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'];
 
@@ -18,6 +18,7 @@ autoprefixer = require('gulp-autoprefixer');
 gulpSequence = require('gulp-sequence').use(gulp);
 shell        = require('gulp-shell');
 plumber      = require('gulp-plumber');
+htmlreplace  = require('gulp-html-replace');
 
 gulp.task('browserSync', function() {
     // browserSync({
@@ -136,7 +137,7 @@ gulp.task('styles', function() {
                 //where to save our final, compressed css file
 //              .pipe(gulp.dest('app/styles'))
 //              .pipe(gulp.dest('public_html/styles/css'))
-                .pipe(gulp.dest('app/styles/css'))
+                .pipe(gulp.dest('app/styles'))
                 //notify browserSync to refresh
                 .pipe(browserSync.reload({stream: true}));
 });
@@ -183,8 +184,10 @@ gulp.task('html', function() {
 
 //migrating over all HTML files for deployment
 gulp.task('html-deploy', function() {
+
     //grab everything, which should include htaccess, robots, etc
-    gulp.src('app/*')
+ // gulp.src('app/*')
+    gulp.src('app/**/*.html')
         //prevent pipe breaking caused by errors from gulp plugins
         .pipe(plumber())
         .pipe(gulp.dest('dist'));
@@ -207,24 +210,43 @@ gulp.task('html-deploy', function() {
         .pipe(gulp.dest('dist/styles'));
 });
 
-//cleans our dist directory in case things got deleted
-gulp.task('clean', function() {
-    return shell.task([
-      'rm -rf dist'
-    ]);
+    //cleans our dist directory in case things got deleted
+    // gulp.task('clean', function() {
+    //     return shell.task([
+    //       'rm -rf dist'
+    //     ]);
+    // });
+    gulp.task('clean', shell.task([
+        'rm -rf dist'
+    ]));
+
+
+    //create folders using shell
+    // gulp.task('scaffold', function() {
+    //   return shell.task([
+    //       'mkdir dist',
+    //       'mkdir dist/fonts',
+    //       'mkdir dist/images',
+    //       'mkdir dist/scripts',
+    //       'mkdir dist/styles'
+    //     ]
+    //   );
+    gulp.task('scaffold', shell.task([
+        'mkdir dist',
+        'mkdir dist/fonts',
+        'mkdir dist/images',
+        'mkdir dist/scripts',
+        'mkdir dist/styles'
+    ]));
+// });
+
+gulp.task('htmlreplace', function() {
+//	gulp.src('dist/index.html')
+	gulp.src('dist/**/*.html')
+	.pipe(htmlreplace({'css': 'styles/css/styles.min.css','js': 'scripts/scripts.min.js'}))
+	.pipe(gulp.dest('dist'));
 });
 
-//create folders using shell
-gulp.task('scaffold', function() {
-  return shell.task([
-      'mkdir dist',
-      'mkdir dist/fonts',
-      'mkdir dist/images',
-      'mkdir dist/scripts',
-      'mkdir dist/styles'
-    ]
-  );
-});
 
 //this is our master task when you run `gulp` in CLI / Terminal
 //this is the main watcher to use when in active development
@@ -233,7 +255,7 @@ gulp.task('scaffold', function() {
 //  start up browserSync
 //  compress all scripts and SCSS files
 gulp.task('default', ['browserSync', 'scripts', 'styles'], function() {
-    //a list of watchers, so it will watch all of the following files waiting for changes
+//a list of watchers, so it will watch all of the following files waiting for changes
 
 //  gulp.watch('app/scripts/src/**', ['scripts']);
 //  gulp.watch('public_html/scripts/src/**', ['scripts']);
@@ -253,4 +275,4 @@ gulp.task('default', ['browserSync', 'scripts', 'styles'], function() {
 
 //this is our deployment task, it will set everything for deployment-ready files
 //gulp.task('deploy', gulpSequence('clean', 'scaffold', ['scripts-deploy', 'styles-deploy', 'images-deploy'], 'html-deploy'));
-  gulp.task('deploy', gulpSequence('clean', 'scaffold', ['scripts-deploy', 'styles-deploy', 'images-deploy'], 'html-deploy'));
+  gulp.task('deploy', gulpSequence('clean', 'scaffold', ['scripts-deploy', 'styles-deploy', 'images-deploy'], 'html-deploy', 'htmlreplace'));
