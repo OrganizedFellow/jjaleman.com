@@ -256,9 +256,11 @@ gulp.task('html-deploy', function() {
 
 
     gulp.task('gitall', shell.task([
+        'gulp deploy',
         'git add .',
         'git commit -m \'DEPLOY\'',
-        'git push'
+        'git push',
+        'git status'
     ]));
 
 
