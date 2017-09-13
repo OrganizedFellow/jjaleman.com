@@ -64,12 +64,13 @@ gulp.task('scripts', function() {
     //this is where our dev JS scripts are
 //  return gulp.src(['app/scripts/src/_includes/**/*.js', 'app/scripts/src/**/*.js'])
 //  return gulp.src(['public_html/scripts/src/_includes/**/*.js', 'public_html/scripts/src/**/*.js'])
-    return gulp.src(['app/scripts/src/**/*.js'])
+//  return gulp.src(['app/scripts/src/**/*.js'])
+    return gulp.src(['app/scripts/src/**/*.js', 'app/scripts/src/_includes/**/*.js'])
                 //prevent pipe breaking caused by errors from gulp plugins
                 .pipe(plumber())
                 //this is the filename of the compressed version of our JS
 //              .pipe(concat('app.js'))
-                .pipe(concat('scripts.js'))
+                .pipe(concat('scripts.min.js'))
                 //catch errors
                 .on('error', gutil.log)
                 //where we will store our finalized, compressed script
@@ -131,7 +132,7 @@ gulp.task('styles', function() {
                 //catch errors
                 .on('error', gutil.log)
                 //the final filename of our combined css file
-                .pipe(concat('styles.css'))
+                .pipe(concat('styles.min.css'))
                 //get our sources via sourceMaps
                 .pipe(sourceMaps.write())
                 //where to save our final, compressed css file
@@ -240,12 +241,15 @@ gulp.task('html-deploy', function() {
     ]));
 // });
 
-gulp.task('htmlreplace', function() {
-//	gulp.src('dist/index.html')
-	gulp.src('dist/**/*.html')
-	.pipe(htmlreplace({'css': 'styles/css/styles.min.css','js': 'scripts/scripts.min.js'}))
-	.pipe(gulp.dest('dist'));
-});
+
+// NO NEED FOR THIS ANYMORE
+// INSTEAD JUST SAVING AS *.min.* ANYWAY
+// gulp.task('htmlreplace', function() {
+// //	gulp.src('dist/index.html')
+// 	gulp.src('dist/**/*.html')
+// 	.pipe(htmlreplace({'css': 'styles/css/styles.min.css','js': 'scripts/scripts.min.js'}))
+// 	.pipe(gulp.dest('dist'));
+// });
 
 
 
@@ -284,5 +288,5 @@ gulp.task('default', ['browserSync', 'scripts', 'styles'], function() {
 });
 
 //this is our deployment task, it will set everything for deployment-ready files
-//gulp.task('deploy', gulpSequence('clean', 'scaffold', ['scripts-deploy', 'styles-deploy', 'images-deploy'], 'html-deploy'));
-  gulp.task('deploy', gulpSequence('clean', 'scaffold', ['scripts-deploy', 'styles-deploy', 'images-deploy'], 'html-deploy', 'htmlreplace'));
+// gulp.task('deploy', gulpSequence('clean', 'scaffold', ['scripts-deploy', 'styles-deploy', 'images-deploy'], 'html-deploy', 'htmlreplace'));
+gulp.task('deploy', gulpSequence('clean', 'scaffold', ['scripts-deploy', 'styles-deploy', 'images-deploy'], 'html-deploy'));
