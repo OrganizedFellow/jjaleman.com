@@ -3,5 +3,5 @@ backend:
   repo: organizedfellow/jjaleman.com        # Path to your Github repository
   branch: master                            # Branch to update
   publish_mode: editorial_workflow
-  media_folder: "images/uploads"            # Media files will be stored in the repo under images/uploads
+  media_folder: "dist/images/uploads"            # Media files will be stored in the repo under images/uploads
   public_folder: "images/uploads"           # The src attribute for uploaded media will begin with /images/uploads
