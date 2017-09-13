@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800');
+
 $primary-color: #205680;
 
 
@@ -8,3 +10,7 @@ h1 {
 	background: $primary-color;
 	color: #FFF;
 }
+p {
+	background: #EEE;
+}
+
