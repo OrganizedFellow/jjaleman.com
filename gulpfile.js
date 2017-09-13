@@ -249,11 +249,11 @@ gulp.task('htmlreplace', function() {
 
 
 
-gulp.task('gitall', shell.task([
-    'git add .',
-    'git commit -m \'DEPLOY\'',
-    'git push'
-]));
+    gulp.task('gitall', shell.task([
+        'git add .',
+        'git commit -m \'DEPLOY\'',
+        'git push'
+    ]));
 
 
 
