@@ -248,6 +248,16 @@ gulp.task('htmlreplace', function() {
 });
 
 
+
+gulp.task('gitall', shell.task([
+    'git add .',
+    'git commit -m \'DEPLOY\'',
+    'git push'
+]));
+
+
+
+
 //this is our master task when you run `gulp` in CLI / Terminal
 //this is the main watcher to use when in active development
 //  this will:
