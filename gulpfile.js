@@ -168,7 +168,7 @@ gulp.task('styles-deploy', function() {
                 //where to save our final, compressed css file
 //              .pipe(gulp.dest('dist/styles'));
 //              .pipe(gulp.dest('public_html/styles/css'));
-                .pipe(gulp.dest('dist/styles/css'));
+                .pipe(gulp.dest('dist/styles'));
 });
 
 //basically just keeping an eye on all HTML files
