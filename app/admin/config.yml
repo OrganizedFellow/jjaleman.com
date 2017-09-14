@@ -3,4 +3,16 @@ backend:
   repo: organizedfellow/jjaleman.com        # Path to your Github repository
   branch: master                            # Branch to update
   publish_mode: editorial_workflow
-  media_folder: "img/uploads"
+
+media_folder: "img/uploads"
+
+collections: # A list of collections the CMS should be able to edit
+  - name: "post" # Used in routes, e.g., /admin/collections/:slug/edit
+    label: "Post" # Used in the UI, e.g., "New Post"
+    folder: "_posts" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    fields: # The fields each document in this collection have
+      - {label: "Title", name: "title", widget: "string", tagname: "h1"}
+      - {label: "Body", name: "body", widget: "markdown"}
+      - {label: "Foo", name: "foo", widget: "foo"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
