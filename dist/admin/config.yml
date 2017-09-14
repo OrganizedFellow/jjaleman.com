@@ -1,5 +1,5 @@
 backend:
-  name: gitlab
+  name: github
   repo: organizedfellow/jjaleman.com        # Path to your Github repository
   branch: master                            # Branch to update
   publish_mode: editorial_workflow
