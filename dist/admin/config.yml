@@ -3,6 +3,4 @@ backend:
   repo: organizedfellow/jjaleman.com        # Path to your Github repository
   branch: master                            # Branch to update
   publish_mode: editorial_workflow
-  media_folder: "images/uploads"
-  public_folder: "dist"
-  site_domain: jjaleman.com
+  media_folder: "img/uploads"
