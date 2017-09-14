@@ -22,4 +22,4 @@ media_folder: "images/uploads"
 
 
 # The src attribute for uploaded media will begin with /images/uploads
-public_folder: "images"
+public_folder: "/"
